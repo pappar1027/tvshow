@@ -25,6 +25,9 @@ a:active {
   max-width: 1440px;
   margin:auto;
 }
+.card {
+  background-color: lightslategray;
+}
 .App-header {
   background-color: #e1def7;
   min-height: 100vh;
@@ -33,7 +36,7 @@ a:active {
   /*align-items: center;*/
   /*justify-content: center;*/
   font-size: calc(10px + 2vmin);
-  color: white;
+  /*color: white;*/
 }
 .centered{
   display: flex;
@@ -46,6 +49,9 @@ a:active {
 }
 .main-container {
   width: 90%;
+}
+.white-container {
+  background-color: white;
 }
 
 .star-ratings-css {
@@ -75,6 +81,7 @@ a:active {
 }
 .banner {
   background-size: cover;
+  color: white;
 }
 .background-gradient {
   background-image: radial-gradient(circle at 20% 50%, rgba(20%, 18.43%, 23.53%, 0.98) 0%, rgba(11%, 18.43%, 23.53%, 0.88) 100%);

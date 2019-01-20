@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  max-width: 1440px;
+  margin:auto;
 }
 
 /*.App-logo {*/
@@ -27,22 +29,20 @@
   color: #61dafb;
 }
 .show-img {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
   width: 100%;
 }
 .main-container {
   width: 90%;
 }
 p {
-  font-size: small;
+  font-size: medium;
 }
 .star-ratings-css {
   unicode-bidi: bidi-override;
   color: #c5c5c5;
   font-size: 25px;
   width: 100px;
-  /*margin: 0 auto;*/
+  margin: 0.5em 0;
   position: relative;
   padding: 0;
 

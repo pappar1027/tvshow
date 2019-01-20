@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+//for responsive image loading
+const small = 'https://image.tmdb.org/t/p/w154/';
+const medium = 'https://image.tmdb.org/t/p/w342/';
+const large = 'https://image.tmdb.org/t/p/w780/';
+const original = 'https://image.tmdb.org/t/p/original/';
+
 class App extends Component {
   render() {
     return (
         <div className="App">
             <header className="App-header">
-                <Shows></Shows>
+                <div className="container">
+                    <Shows></Shows>
+                </div>
+
             </header>
         </div>
     );
@@ -56,11 +65,12 @@ class Shows extends Component {
                     <Route path="/" exact render={()=> (
                         <div className="row">
                             {shows.map(item => (
-                                <Link to={`/${item.id.toString()}`}>
-                                    <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3">
-                                        <img className="img" data-sizes="auto" srcset={"https://image.tmdb.org/t/p/"+item.poster_path+" 1x, https://image.tmdb.org/t/p/w116_and_h174_face/"+item.poster_path+" 2x"} src={"https://image.tmdb.org/t/p/w58_and_h87_face/"+item.poster_path} alt={item.name}/>
+                                    <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 p-1">
+                                        <Link to={`/${item.id.toString()}`}>
+                                            <img className="show-img" sizes="(max-width: 575) 45vw, (max-width: 767) 26vw, 20vw" srcSet={small+item.poster_path+" 154w,"+ medium+item.poster_path+" 342w,"+large+item.poster_path+" 780w"} src={original+item.poster_path} alt={item.name}/>
+                                        </Link>
                                     </div>
-                                </Link>
+
                             ))}
                         </div>
                     )}/>
@@ -72,13 +82,7 @@ class Shows extends Component {
     }
   }
 }
-//do a query to tv at
-// const Showpage =({match}) => {
-//     return (
-//         <div>{match.params.showId}</div>
-//     )
-// }
-
+//do a query to tv
 class Showpage extends Component {
     constructor(props) {
         super(props);

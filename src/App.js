@@ -3,20 +3,19 @@ import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 //for responsive image loading
-const small = 'https://image.tmdb.org/t/p/w154/';
-const medium = 'https://image.tmdb.org/t/p/w342/';
-const large = 'https://image.tmdb.org/t/p/w780/';
-const original = 'https://image.tmdb.org/t/p/original/';
+const imgbase = 'https://image.tmdb.org/t/p/';
+const small = imgbase+'w154/';
+const medium = imgbase+'w342/';
+const large = imgbase+'w780/';
+const original = imgbase+'original/';
+
 
 class App extends Component {
   render() {
     return (
         <div className="App">
             <header className="App-header">
-                <div className="container">
-                    <Shows></Shows>
-                </div>
-
+                <Shows></Shows>
             </header>
         </div>
     );
@@ -55,21 +54,21 @@ class Shows extends Component {
   render() {
     const { error, isLoaded, shows } = this.state;
     if (error) {
-        return <div>Error: {error.message}</div>;
+        return <div className="py-5">Error: {error.message}</div>;
     } else if (!isLoaded) {
-        return <div>Loading...</div>;
+        return <div className="py-5">Loading...</div>;
     } else {
         return (
             <Router>
-                <div>
+                <div className="centered">
                     <Route path="/" exact render={()=> (
-                        <div className="row">
+                        <div className="row main-container my-5">
                             {shows.map(item => (
-                                    <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 p-1">
-                                        <Link to={`/${item.id.toString()}`}>
-                                            <img className="show-img" sizes="(max-width: 575) 45vw, (max-width: 767) 26vw, 20vw" srcSet={small+item.poster_path+" 154w,"+ medium+item.poster_path+" 342w,"+large+item.poster_path+" 780w"} src={original+item.poster_path} alt={item.name}/>
-                                        </Link>
-                                    </div>
+                                <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 p-1">
+                                    <Link to={`/${item.id.toString()}`}>
+                                        <img className="show-img" sizes="(max-width: 575) 45vw, (max-width: 767) 26vw, 20vw" srcSet={small+item.poster_path+" 154w,"+ medium+item.poster_path+" 342w,"+large+item.poster_path+" 780w"} src={original+item.poster_path} alt={item.name}/>
+                                    </Link>
+                                </div>
 
                             ))}
                         </div>
@@ -77,6 +76,8 @@ class Shows extends Component {
                     <Route path="/:showId" component={Showpage}/>
                 </div>
             </Router>
+
+
 
         );
     }
@@ -113,21 +114,46 @@ class Showpage extends Component {
     render(){
         const { error, isLoaded, info } = this.state;
         if (error) {
-            return <div>Error: {error.message}</div>;
+            return <div className="py-5">Error: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return <div className="py-5">Loading...</div>;
         } else if (info){
             return (
-                <div>{info.homepage}</div>
+                <div>
+                    <div className="banner my-5" style={{backgroundImage: `url(${original}${info.backdrop_path})`,zIndex: '-1'}}>
+                        <div className="background-gradient">
+                            <div className="row">
+                                <div className="col-12 col-md-4">
+                                    <img className="show-img" srcSet={small+info.poster_path+" 154w,"+ medium+info.poster_path+" 342w,"+large+info.poster_path+" 780w"} src={original+info.poster_path} alt={info.name}/>
+                                </div>
+                                <div className="col-12 col-md-8 text-left">
+                                    <a href={info.homepage}><h1>{info.name} <small>({info.first_air_date.slice(0,4)})</small></h1></a>
+                                    <div className="star-ratings-css">
+                                        <div className="star-ratings-css-top" style={{width: `${(info.vote_average)*10}%`}}><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                                        <div className="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><p>{info.vote_average}</p></div>
+                                    </div>
+                                    <h5>Overview:</h5>
+                                    <p>{info.overview}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
 
             );
         }
         else {
             return (
-                <div>no info is found.</div>
+                <div>No info is found.</div>
             );
         }
     }
+}
+
+class Trailer extends Component {
+
 }
 
 

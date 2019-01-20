@@ -164,16 +164,16 @@ class Trailer extends Component {
 class Navbar extends Component {
     render() {
         return (
-                <nav className="navbar navbar-dark justify-content-between" style={{backgroundColor: '#563d7c'}}>
+                <nav className="navbar navbar-dark justify-content-between" style={{backgroundColor: 'rebeccapurple'}}>
                     <a className="navbar-brand" href="/">Hook</a>
                     {/*<form className=" my-2 my-lg-0 d-flex d-md-none">*/}
                         {/*<input className="form-control mr-2 my-auto" type="search" placeholder="Search" aria-label="Search"/>*/}
                         {/*<button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Go</button>*/}
                     {/*</form>*/}
-                    <form className="form-inline my-2 my-lg-0 d-none d-md-flex">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                        <button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                    {/*<form className="form-inline my-2 my-lg-0 d-none d-md-flex">*/}
+                        {/*<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>*/}
+                        {/*<button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>*/}
+                    {/*</form>*/}
 
                 </nav>
 

@@ -1,16 +1,32 @@
+p {
+  font-size: medium;
+}
+a:link {
+  color: white;
+}
+
+/* visited link */
+a:visited {
+  color: white;
+}
+
+/* mouse over link */
+a:hover {
+  color: rebeccapurple;
+}
+
+/* selected link */
+a:active {
+  color: rebeccapurple;
+}
+
 .App {
   text-align: center;
   max-width: 1440px;
   margin:auto;
 }
-
-/*.App-logo {*/
-  /*animation: App-logo-spin infinite 20s linear;*/
-  /*height: 40vmin;*/
-/*}*/
-
 .App-header {
-  background-color: #282c34;
+  background-color: #e1def7;
   min-height: 100vh;
   /*display: flex;*/
   /*flex-direction: column;*/
@@ -25,18 +41,13 @@
   align-items: center;
   justify-content: center;
 }
-.App-link {
-  color: #61dafb;
-}
 .show-img {
   width: 100%;
 }
 .main-container {
   width: 90%;
 }
-p {
-  font-size: medium;
-}
+
 .star-ratings-css {
   unicode-bidi: bidi-override;
   color: #c5c5c5;
@@ -66,21 +77,13 @@ p {
   background-size: cover;
 }
 .background-gradient {
-  background-image: radial-gradient(circle at 20% 50%, rgba(11.76%, 18.43%, 23.53%, 0.98) 0%, rgba(11.76%, 18.43%, 23.53%, 0.88) 100%);
+  background-image: radial-gradient(circle at 20% 50%, rgba(20%, 18.43%, 23.53%, 0.98) 0%, rgba(11%, 18.43%, 23.53%, 0.88) 100%);
 }
 .row {
   margin-left: 15px;
   margin-right:15px;
 }
 
-/*@keyframes App-logo-spin {*/
-  /*from {*/
-    /*transform: rotate(0deg);*/
-  /*}*/
-  /*to {*/
-    /*transform: rotate(360deg);*/
-  /*}*/
-/*}*/
 
  /*Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {

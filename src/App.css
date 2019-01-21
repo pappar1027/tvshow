@@ -100,10 +100,11 @@ a:active {
 }
 .banner {
   background-size: cover;
-  color: white;
   width: 100vw;
 }
 .background-gradient {
+  width:100vw;
+  color: white;
   background-image: radial-gradient(circle at 20% 50%, rgba(20%, 18.43%, 23.53%, 0.98) 0%, rgba(11%, 18.43%, 23.53%, 0.88) 100%);
 }
 .row {

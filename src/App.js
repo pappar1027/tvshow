@@ -242,6 +242,25 @@ class Season extends Component {
             return <div className="py-5">Loading...</div>;
         } else if (info){
             return (
+            <div>
+                <div className="background-gradient">
+                    <div className="row justify-content-center">
+                        <div className="col-12 col-md-4 my-3">
+                            {info.poster_path
+                                ?<img className="show-img" sizes="(max-width: 767) 90vw, 20vw" srcSet={small+info.poster_path+" 154w,"+ medium+info.poster_path+" 342w,"+large+info.poster_path+" 780w"} src={original+info.poster_path} alt={info.name}/>
+                                : null
+                            }
+                        </div>
+                        <div className="col-12 col-md-8 col-xl-6 text-left my-3">
+                            <h1>{info.name} {info.air_date? <p>({info.air_date.slice(0,4)})</p>: null }</h1>
+                            {info.overview?<h5>Overview:</h5>: null}
+                            <p>{info.overview}</p>
+                            <Link to={`/tv/${this.props.match.params.showId}`}>
+                                <button type="button" className="btn btn-light">Back to show page</button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
                 <div className="main-container m-auto">
                     {info.episodes.map(ep => (
                         <div className="row my-2 py-3 text-left white-container">
@@ -262,6 +281,8 @@ class Season extends Component {
                     ))}
 
                 </div>
+            </div>
+
             );
         }
         else {

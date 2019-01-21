@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Select from 'react-select'
+import Genres from './genres'
 
 //for responsive image loading
 const imgbase = 'https://image.tmdb.org/t/p/';
@@ -8,6 +10,12 @@ const small = imgbase+'w154/';
 const medium = imgbase+'w342/';
 const large = imgbase+'w780/';
 const original = imgbase+'original/';
+const sortby = [
+    { value: 'popularity.desc', label: 'Popularity desc' },
+    { value: 'vote_average.desc', label: 'Rating desc' },
+];
+const genres = Genres.genres;
+
 
 
 class App extends Component {
@@ -29,12 +37,15 @@ class Shows extends Component {
     this.state = {
         error: null,
         isLoaded: false,
-        shows: []
+        shows: [],
+        sortBy: 'popularity.desc',
+        genre: ''
+
     };
   }
 
   componentDidMount() {
-    fetch("https://api.themoviedb.org/3/discover/tv?api_key=5c42d570e7ecb65d2dca1264e2f80e37&language=en-US&sort_by=popularity.desc&page=1&timezone=Asia%2FSingapore&include_null_first_air_dates=false")
+      fetch(`https://api.themoviedb.org/3/discover/tv?api_key=5c42d570e7ecb65d2dca1264e2f80e37&language=en-US&sort_by=${this.state.sortBy}&page=1&timezone=Asia%2FSingapore&include_null_first_air_dates=false`)
         .then(res => res.json())
         .then(
             (result) => {
@@ -51,9 +62,28 @@ class Shows extends Component {
             }
         )
   }
+  onChange() {
+      fetch(`https://api.themoviedb.org/3/discover/tv?api_key=5c42d570e7ecb65d2dca1264e2f80e37&language=en-US&sort_by=${this.state.sortBy}&page=1&timezone=Asia%2FSingapore&include_null_first_air_dates=false&${this.state.genre}`)
+          .then(res => res.json())
+          .then(
+              (result) => {
+                  this.setState({
+                      isLoaded: true,
+                      shows: result.results
+                  });
+                  console.log(result)
+              },
+              (error) => {
+                  this.setState({
+                      isLoaded: true,
+                      error
+                  });
+              }
+          )
+  }
 
   render() {
-    const { error, isLoaded, shows } = this.state;
+    const { error, isLoaded, shows,sortBy,genre } = this.state;
     if (error) {
         return <div className="py-5">Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -63,14 +93,18 @@ class Shows extends Component {
             <Router>
                 <div className="centered">
                     <Route path="/" exact render={()=> (
-                        <div className="row main-container my-5">
+                        <div className="row main-container my-4">
+                            <Select options={sortby} onChange={value=> this.setState({sortBy: value.value},this.onChange)} defaultValue={sortby[0]} className="col-12 col-sm-6 px-1 py-2"/>
+                            <Select options={genres} onChange={value=> this.setState({genre: value.value},this.onChange)} defaultValue={genres[0]} className="col-12 col-sm-6 px-1 py-2"/>
                             {shows.map(item => (
-                                <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 p-1">
+                                <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 p-1 mb-1 align-self-center">
                                     <Link to={`/tv/${item.id.toString()}`}>
-                                        <img className="show-img my-1" sizes="(max-width: 575) 45vw, (max-width: 767) 26vw, 20vw" srcSet={small+item.poster_path+" 154w,"+ medium+item.poster_path+" 342w,"+large+item.poster_path+" 780w"} src={original+item.poster_path} alt={item.name}/>
+                                        {item.poster_path
+                                            ? <img className="show-img" sizes="(max-width: 575) 45vw, (max-width: 767) 26vw, 20vw" srcSet={small+item.poster_path+" 154w,"+ medium+item.poster_path+" 342w,"+large+item.poster_path+" 780w"} src={original+item.poster_path} alt={item.name}/>
+                                            : <p className="purple">{item.name}</p>
+                                        }
                                     </Link>
                                 </div>
-
                             ))}
                         </div>
                     )}/>
@@ -121,12 +155,15 @@ class Showpage extends Component {
                 <div>
                     <div className="banner" style={{backgroundImage: `url(${original}${info.backdrop_path})`,zIndex: '-1'}}>
                         <div className="background-gradient">
-                            <div className="row">
+                            <div className="row justify-content-center">
                                 <div className="col-12 col-md-4 my-3">
-                                    <img className="show-img" sizes="(max-width: 767) 90vw, 20vw" srcSet={small+info.poster_path+" 154w,"+ medium+info.poster_path+" 342w,"+large+info.poster_path+" 780w"} src={original+info.poster_path} alt={info.name}/>
+                                    {info.poster_path
+                                        ?<img className="show-img" sizes="(max-width: 767) 90vw, 20vw" srcSet={small+info.poster_path+" 154w,"+ medium+info.poster_path+" 342w,"+large+info.poster_path+" 780w"} src={original+info.poster_path} alt={info.name}/>
+                                        : null
+                                    }
                                 </div>
-                                <div className="col-12 col-md-8 text-left my-3">
-                                    <a href={info.homepage}><h1>{info.name} <small>({info.first_air_date.slice(0,4)})</small></h1></a>
+                                <div className="col-12 col-md-8 col-xl-6 text-left my-3">
+                                    <a href={info.homepage}><h1>{info.name} {info.first_air_date? <p>({info.first_air_date.slice(0,4)})</p>: null }</h1></a>
                                     <div>
                                         {info.genres.map(item => (
                                             <span key={item.id.toString()} className="badge badge-light mr-2">
@@ -145,13 +182,12 @@ class Showpage extends Component {
                     <div className="row justify-content-center">
                         {info.seasons.map(item => (
 
-                            <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 card p-0 m-1">
+                            <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 p-0 m-1 card">
                                 <Link to={`/season/${item.season_number}/${this.props.match.params.showId}`}>
                                     {item.poster_path
                                         ? <img className="card-img-top" sizes="(max-width: 575) 45vw, (max-width: 767) 26vw, 20vw" srcSet={small+item.poster_path+" 154w,"+ medium+item.poster_path+" 342w,"+large+item.poster_path+" 780w"} src={original+item.poster_path} alt={item.name}/>
                                         : null
                                     }
-
                                     <div className="card-body py-2">
                                         <p class="card-text">{item.name}</p>
                                     </div>
@@ -206,7 +242,7 @@ class Season extends Component {
             return <div className="py-5">Loading...</div>;
         } else if (info){
             return (
-                <div>
+                <div className="main-container m-auto">
                     {info.episodes.map(ep => (
                         <div className="row my-2 py-3 text-left white-container">
                             <div className="col-12 col-md-4">
@@ -216,14 +252,13 @@ class Season extends Component {
                                 }
                                 <p className="text-center">Episode {ep.episode_number}</p>
                             </div>
-                            <div className="col-12 col-md-8">
+                            <div className="col-12 col-md-8 pr-xl-5">
                                 <h5>{ep.name}</h5>
+                                <p>{ep.air_date}</p>
                                 <Rating value={ep.vote_average}/>
                                 <p>{ep.overview}</p>
                             </div>
-
                         </div>
-
                     ))}
 
                 </div>
@@ -251,15 +286,16 @@ class Rating extends Component {
     }
 }
 
-class Trailer extends Component {
+// class Trailer extends Component {
+//
+// }
 
-}
 
 class Navbar extends Component {
     render() {
         return (
                 <nav className="navbar navbar-dark justify-content-between" style={{backgroundColor: 'rebeccapurple'}}>
-                    <a className="navbar-brand" href="/">hOOk</a>
+                    <a className="navbar-brand" href="/"><b>hOOk</b></a>
                     {/*<form className=" my-2 my-lg-0 d-flex d-md-none">*/}
                         {/*<input className="form-control mr-2 my-auto" type="search" placeholder="Search" aria-label="Search"/>*/}
                         {/*<button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Go</button>*/}

@@ -1,0 +1,72 @@
+{
+    "genres": [
+        {
+            "value": "",
+            "label": "All Genres"
+        },
+        {
+            "value": "with_genres=10759",
+            "label": "Action & Adventure"
+        },
+        {
+            "value": "with_genres=16",
+            "label": "Animation"
+        },
+        {
+            "value": "with_genres=35",
+            "label": "Comedy"
+        },
+        {
+            "value": "with_genres=80",
+            "label": "Crime"
+        },
+        {
+            "value": "with_genres=99",
+            "label": "Documentary"
+        },
+        {
+            "value": "with_genres=18",
+            "label": "Drama"
+        },
+        {
+            "value": "with_genres=10751",
+            "label": "Family"
+        },
+        {
+            "value": "with_genres=10762",
+            "label": "Kvalues"
+        },
+        {
+            "value": "with_genres=9648",
+            "label": "Mystery"
+        },
+        {
+            "value": "with_genres=10763",
+            "label": "News"
+        },
+        {
+            "value": "with_genres=10764",
+            "label": "Reality"
+        },
+        {
+            "value": "with_genres=10765",
+            "label": "Sci-Fi & Fantasy"
+        },
+        {
+            "value": "with_genres=10766",
+            "label": "Soap"
+        },
+        {
+            "value": "with_genres=10767",
+            "label": "Talk"
+        },
+        {
+            "value": "with_genres=10768",
+            "label": "War & Politics"
+        },
+        {
+            "value": "with_genres=37",
+            "label": "Western"
+        }
+    ]
+}

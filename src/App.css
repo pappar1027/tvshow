@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body{
+  font-family: 'Roboto', sans-serif;
+}
+
 p {
   font-size: medium;
 }
@@ -22,9 +28,10 @@ a:active {
 
 .App {
   text-align: center;
-  max-width: 1440px;
-  margin:auto;
+  /*max-width: 1440px;*/
+  /*margin:auto;*/
 }
+
 .card {
   background-color: lightslategray;
 }
@@ -36,7 +43,9 @@ a:active {
   /*align-items: center;*/
   /*justify-content: center;*/
   font-size: calc(10px + 2vmin);
-  /*color: white;*/
+}
+.purple {
+  color: rebeccapurple;
 }
 .centered{
   display: flex;
@@ -45,8 +54,18 @@ a:active {
   justify-content: center;
 }
 .show-img {
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  border-radius: 0.25rem;
   width: 100%;
 }
+.fit-img {
+  overflow: hidden;
+  object-fit: fill;
+  height: 100%;
+  width: 100%;
+}
+
 .main-container {
   width: 90%;
 }
@@ -58,8 +77,8 @@ a:active {
   unicode-bidi: bidi-override;
   color: #c5c5c5;
   font-size: 25px;
-  width: 100px;
-  margin: 0.5em 1rem 0 0;
+  width: 125px;
+  margin: 0.5em 0 0 0;
   position: relative;
   padding: 0;
 
@@ -69,19 +88,20 @@ a:active {
   padding: 0;
   position: absolute;
   z-index: 1;
-  display: inline-block;
+  display: block;
   top: 0;
   left: 0;
   overflow: hidden;
 }
 .star-ratings-css-bottom {
   padding: 0;
-  display: inline-block;
+  display: block;
   z-index: 0;
 }
 .banner {
   background-size: cover;
   color: white;
+  width: 100vw;
 }
 .background-gradient {
   background-image: radial-gradient(circle at 20% 50%, rgba(20%, 18.43%, 23.53%, 0.98) 0%, rgba(11%, 18.43%, 23.53%, 0.88) 100%);
@@ -106,4 +126,11 @@ a:active {
 @media (min-width: 992px) { }
 
 /*Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 1200px) { }
+@media (min-width: 1200px) {
+  p {
+    font-size: x-large;
+  }
+  h5 {
+    font-size: xx-large;
+  }
+}

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import Select from 'react-select'
 import Genres from './genres'
+import Navbar from './Navbar'
 
 //for responsive image loading
 const imgbase = 'https://image.tmdb.org/t/p/';
@@ -10,6 +11,8 @@ const small = imgbase+'w154/';
 const medium = imgbase+'w342/';
 const large = imgbase+'w780/';
 const original = imgbase+'original/';
+
+//for filtering
 const sortby = [
     { value: 'popularity.desc', label: 'Popularity desc' },
     { value: 'vote_average.desc', label: 'Rating desc' },
@@ -22,7 +25,6 @@ class App extends Component {
   render() {
     return (
         <div className="App">
-            <Navbar/>
             <header className="App-header">
                 <Shows/>
             </header>
@@ -32,17 +34,14 @@ class App extends Component {
 }
 
 class Shows extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+    state = {
         error: null,
         isLoaded: false,
         shows: [],
-        sortBy: 'popularity.desc',
-        genre: ''
+        sortBy: "popularity.desc",
+        genre: ""
 
     };
-  }
 
   componentDidMount() {
       fetch(`https://api.themoviedb.org/3/discover/tv?api_key=5c42d570e7ecb65d2dca1264e2f80e37&language=en-US&sort_by=${this.state.sortBy}&page=1&timezone=Asia%2FSingapore&include_null_first_air_dates=false`)
@@ -87,29 +86,33 @@ class Shows extends Component {
     if (error) {
         return <div className="py-5">Error: {error.message}</div>;
     } else if (!isLoaded) {
-        return <div className="py-5">Loading...</div>;
+        return <div className="py-5"><b>Loading...</b></div>;
     } else {
         return (
             <Router>
-                <div className="centered">
-                    <Route path="/" exact render={()=> (
-                        <div className="row main-container my-4">
-                            <Select options={sortby} onChange={value=> this.setState({sortBy: value.value},this.onChange)} defaultValue={sortby[0]} className="col-12 col-sm-6 px-1 py-1 py-sm-2 my-select"/>
-                            <Select options={genres} onChange={value=> this.setState({genre: value.value},this.onChange)} defaultValue={genres[0]} className="col-12 col-sm-6 px-1 py-1 py-sm-2 my-select"/>
-                            {shows.map(item => (
-                                <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 p-1 mb-1 align-self-center">
-                                    <Link to={`/tv/${item.id.toString()}`}>
-                                        {item.poster_path
-                                            ? <img className="show-img" sizes="(max-width: 575) 45vw, (max-width: 767) 26vw, 20vw" srcSet={small+item.poster_path+" 154w,"+ medium+item.poster_path+" 342w,"+large+item.poster_path+" 780w"} src={original+item.poster_path} alt={item.name}/>
-                                            : <p className="purple">(Poster Not Available)<br/>{item.name}</p>
-                                        }
-                                    </Link>
-                                </div>
-                            ))}
-                        </div>
-                    )}/>
-                    <Route path="/tv/:showId" component={Showpage}/>
-                    <Route path="/season/:seasonId/:showId" component={Season}/>
+                <div>
+                    <Navbar/>
+                    <div className="centered">
+                        <Route path="/" exact render={()=> (
+                            <div className="row main-container my-4">
+                                <Select options={sortby} onChange={value=> this.setState({sortBy: value.value},this.onChange)} defaultValue={sortby[0]} className="col-12 col-sm-6 px-1 py-1 py-sm-2 my-select"/>
+                                <Select options={genres} onChange={value=> this.setState({genre: value.value},this.onChange)} defaultValue={genres[0]} className="col-12 col-sm-6 px-1 py-1 py-sm-2 my-select"/>
+                                {shows.map(item => (
+                                    <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 p-1 mb-1 align-self-center">
+                                        <Link to={`/tv/${item.id.toString()}`}>
+                                            {item.poster_path
+                                                ? <img className="show-img" sizes="(max-width: 575) 45vw, (max-width: 767) 26vw, 20vw" srcSet={small+item.poster_path+" 154w,"+ medium+item.poster_path+" 342w,"+large+item.poster_path+" 780w"} src={original+item.poster_path} alt={item.name}/>
+                                                : <p className="purple">(Poster Not Available)<br/>{item.name}</p>
+                                            }
+                                        </Link>
+                                    </div>
+                                ))}
+                            </div>
+                        )}/>
+                        <Route path="/search/:showName" component={Search}/>
+                        <Route path="/tv/:showId" component={Showpage}/>
+                        <Route path="/season/:seasonId/:showId" component={Season}/>
+                    </div>
                 </div>
             </Router>
         );
@@ -149,7 +152,7 @@ class Showpage extends Component {
         if (error) {
             return <div className="py-5">Error: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div className="py-5">Loading...</div>;
+            return <div className="py-5"><b>Loading...</b></div>;
         } else if (info){
             return (
                 <div>
@@ -189,7 +192,7 @@ class Showpage extends Component {
                                         : null
                                     }
                                     <div className="card-body py-2">
-                                        <p class="card-text">{item.name}</p>
+                                        <p className="card-text">{item.name}</p>
                                     </div>
                                 </Link>
                             </div>
@@ -263,7 +266,7 @@ class Season extends Component {
                 </div>
                 <div className="main-container m-auto">
                     {info.episodes.map(ep => (
-                        <div className="row my-2 py-3 text-left white-container">
+                        <div key={ep.id.toString()} className="row my-2 py-3 text-left white-container">
                             <div className="col-12 col-md-4">
                                 {ep.still_path
                                     ?<img className="show-img" sizes="(max-width: 767) 90vw, 20vw" srcSet={small+ep.still_path+" 154w,"+ medium+ep.still_path+" 342w,"+large+ep.still_path+" 780w"} src={original+ep.still_path} alt={ep.name}/>
@@ -297,7 +300,6 @@ class Season extends Component {
 
 class Rating extends Component {
     render(){
-        console.log(this.props.value);
         return (
             <div className="star-ratings-css">
                 <div className="star-ratings-css-top" style={{width: `${(this.props.value)*10}%`}}><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
@@ -312,22 +314,73 @@ class Rating extends Component {
 // }
 
 
-class Navbar extends Component {
-    render() {
-        return (
-                <nav className="navbar navbar-dark justify-content-between" style={{backgroundColor: 'rebeccapurple'}}>
-                    <a className="navbar-brand" href="/"><b>hOOk</b></a>
-                    {/*<form className=" my-2 my-lg-0 d-flex d-md-none">*/}
-                        {/*<input className="form-control mr-2 my-auto" type="search" placeholder="Search" aria-label="Search"/>*/}
-                        {/*<button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Go</button>*/}
-                    {/*</form>*/}
-                    {/*<form className="form-inline my-2 my-lg-0 d-none d-md-flex">*/}
-                        {/*<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>*/}
-                        {/*<button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>*/}
-                    {/*</form>*/}
+class Search extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error:null,
+            isLoaded :false,
+            results: []
+        }
+    }
+    componentDidMount() {
+        this.fetchData();
+    }
+    fetchData () {
+        fetch(`https://api.themoviedb.org/3/search/tv?api_key=5c42d570e7ecb65d2dca1264e2f80e37&language=en-US&query=${this.props.match.params.showName}&page=1`)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        results: result.results
+                    });
+                    console.log(result);
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.showName !== prevProps.match.params.showName) {
+            this.fetchData();
+        }
+    }
+    render () {
+        const { error, isLoaded, results } = this.state;
+        if (error) {
+            return <div className="py-5">Error: {error.message}</div>;
+        } else if (!isLoaded) {
+            return <div className="py-5"><b>Loading...</b></div>;
+        } else{
+            return (
+                <div className="main-container m-auto">
+                    <h2 className="text-left m-3">Search Results</h2>
+                    {results.map(item => (
+                        <div key={item.id.toString()} className="my-2 py-3 text-left white-container">
+                            <Link to={`/tv/${item.id.toString()}`} className="row">
+                                <div className="col-12 col-md-4">
+                                    {item.poster_path
+                                        ?<img className="show-img" sizes="(max-width: 767) 90vw, 20vw" srcSet={small+item.poster_path+" 154w,"+ medium+item.poster_path+" 342w,"+large+item.poster_path+" 780w"} src={original+item.poster_path} alt={item.name}/>
+                                        :<p>Poster not available</p>
+                                    }
+                                </div>
+                                <div className="col-12 col-md-8 pr-xl-5">
+                                    <h5>{item.name} {item.first_air_date? <p>({item.first_air_date.slice(0,4)})</p>: null }</h5>
+                                    <Rating value={item.vote_average}/>
+                                    <p>Overview{item.overview}</p>
+                                </div>
+                            </Link>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
 
-                </nav>
-        );
     }
 }
 

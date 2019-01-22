@@ -7,22 +7,39 @@ body{
 p {
   font-size: medium;
 }
-a:link {
-  color: white;
+.white-container a:link {
+  color: black;
 }
-
 /* visited link */
-a:visited {
-  color: white;
+.white-container a:visited {
+  color: black;
 }
 
 /* mouse over link */
-a:hover {
+.white-container a:hover {
   color: rebeccapurple;
 }
 
 /* selected link */
-a:active {
+.white-container a:active {
+  color: rebeccapurple;
+}
+
+.background-gradient a:link {
+  color: white;
+}
+/* visited link */
+.background-gradient a:visited {
+  color: white;
+}
+
+/* mouse over link */
+.background-gradient a:hover {
+  color: rebeccapurple;
+}
+
+/* selected link */
+.background-gradient a:active {
   color: rebeccapurple;
 }
 
@@ -118,13 +135,13 @@ a:active {
   .main-container {
     width: 80%;
   }
+  .my-select {
+    font-size: medium;
+  }
 }
 
 /*Medium devices (tablets, 768px and up)*/
 @media (min-width: 768px) {
-  .my-select {
-    font-size: large;
-  }
 }
 
 /*Large devices (desktops, 992px and up)*/

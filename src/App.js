@@ -85,7 +85,7 @@ class Shows extends Component {
     if (error) {
         return <div className="py-5">Error: {error.message}</div>;
     } else if (!isLoaded) {
-        return <div className="py-5"><b>Loading...</b></div>;
+        return <div className="lds-roller my-5"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>;
     } else {
         return (
             <Router>
@@ -151,7 +151,7 @@ class Showpage extends Component {
         if (error) {
             return <div className="py-5">Error: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div className="py-5"><b>Loading...</b></div>;
+            return <div className="lds-roller my-5"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>;
         } else if (info){
             return (
                 <div>
@@ -241,7 +241,7 @@ class Season extends Component {
         if (error) {
             return <div className="py-5">Error: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div className="py-5">Loading...</div>;
+            return <div className="lds-roller my-5"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>;
         } else if (info){
             return (
             <div>
@@ -308,11 +308,6 @@ class Rating extends Component {
     }
 }
 
-// class Trailer extends Component {
-//
-// }
-
-
 class Search extends Component {
     constructor(props) {
         super(props);
@@ -353,7 +348,7 @@ class Search extends Component {
         if (error) {
             return <div className="py-5">Error: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div className="py-5"><b>Loading...</b></div>;
+            return <div className="lds-roller my-5"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>;
         } else{
             return (
                 <div className="main-container m-auto">

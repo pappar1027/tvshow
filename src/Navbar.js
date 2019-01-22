@@ -40,14 +40,13 @@ class Navbar extends Component {
 
     }
 
-
     componentWillUnmount() {
         this.handleChange.cancel();
     }
 
     render() {
         const { error, results } = this.state;
-        const options = []
+        const options = [];
         results.map (item => options.push(item.name));
         if (error) {
             return <div className="py-5">Error: {error.message}</div>;}
@@ -56,8 +55,8 @@ class Navbar extends Component {
                 <nav className="navbar navbar-dark justify-content-between" style={{backgroundColor: "rebeccapurple"}}>
                     <a className="navbar-brand" href="/"><b>hOOk</b></a>
                     <form className="form-inline my-2 my-lg-0" onSubmit={this.handleSearch.bind(this)}>
-                        <ReactDatalist list="tvshowlist" className="form-control my-auto mr-sm-2" options={options} placeholder="Search TV shows" onInputChange={e => this.handleChange(e.target.value)}/>
-                        <button className="btn btn-outline-primary my-auto ml-2" type="submit">Search</button>
+                        <ReactDatalist list="tvshowlist" className="form-control my-auto" options={options} placeholder="Search TV shows" onInputChange={e => this.handleChange(e.target.value)}/>
+                        <button className="btn btn-outline-primary my-auto ml-1" type="submit">Go</button>
                     </form>
                 </nav>
             );

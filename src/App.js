@@ -33,6 +33,7 @@ class App extends Component {
   }
 }
 
+//main page
 class Shows extends Component {
     state = {
         error: null,
@@ -118,7 +119,7 @@ class Shows extends Component {
     }
   }
 }
-//do a query to tv details
+//each individual show page
 class Showpage extends Component {
     constructor(props) {
         super(props);
@@ -184,7 +185,7 @@ class Showpage extends Component {
                     <div className="row justify-content-center">
                         {info.seasons.map(item => (
 
-                            <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 p-0 m-1 card">
+                            <div key={item.id.toString()} className="col-5 col-sm-4 col-md-3 p-0 m-1 card">
                                 <Link to={`/season/${item.season_number}/${this.props.match.params.showId}`}>
                                     {item.poster_path
                                         ? <img className="card-img-top" sizes="(max-width: 575) 45vw, (max-width: 767) 26vw, 20vw" srcSet={small+item.poster_path+" 154w,"+ medium+item.poster_path+" 342w,"+large+item.poster_path+" 780w"} src={original+item.poster_path} alt={item.name}/>
@@ -263,7 +264,7 @@ class Season extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="main-container m-auto">
+                <div className="m-auto">
                     {info.episodes.map(ep => (
                         <div key={ep.id.toString()} className="row my-2 py-3 text-left white-container">
                             <div className="col-12 col-md-4">
@@ -297,17 +298,7 @@ class Season extends Component {
     }
 }
 
-class Rating extends Component {
-    render(){
-        return (
-            <div className="star-ratings-css">
-                <div className="star-ratings-css-top" style={{width: `${(this.props.value)*10}%`}}><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-                <div className="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span className="ml-3">{this.props.value}</span></div>
-            </div>
-        )
-    }
-}
-
+// page for search
 class Search extends Component {
     constructor(props) {
         super(props);
@@ -377,6 +368,16 @@ class Search extends Component {
         }
     }
 }
-
+// star rating
+class Rating extends Component {
+    render(){
+        return (
+            <div className="star-ratings-css">
+                <div className="star-ratings-css-top" style={{width: `${(this.props.value)*10}%`}}><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                <div className="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span className="ml-3">{this.props.value}</span></div>
+            </div>
+        )
+    }
+}
 
 export default App;

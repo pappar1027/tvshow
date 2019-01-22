@@ -40,8 +40,6 @@ class Navbar extends Component {
             const text = this.state.text;
             this.setState({text:''},()=>{this.props.history.push(`/search/${text}`);});
         }
-
-
     }
 
     componentWillUnmount() {

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link} from "react-router-dom";
 import Select from 'react-select'
 import Genres from './genres'
 import Navbar from './Navbar'
+
 
 //for responsive image loading
 const imgbase = 'https://image.tmdb.org/t/p/';
@@ -18,7 +19,6 @@ const sortby = [
     { value: 'vote_average.desc', label: 'Rating desc' },
 ];
 const genres = Genres.genres;
-
 
 
 class App extends Component {
@@ -70,7 +70,6 @@ class Shows extends Component {
                       isLoaded: true,
                       shows: result.results
                   });
-                  console.log(result)
               },
               (error) => {
                   this.setState({
@@ -335,7 +334,6 @@ class Search extends Component {
                         isLoaded: true,
                         results: result.results
                     });
-                    console.log(result);
                 },
                 (error) => {
                     this.setState({
@@ -360,6 +358,7 @@ class Search extends Component {
             return (
                 <div className="main-container m-auto">
                     <h2 className="text-left m-3">Search Results</h2>
+                    {results.length == 0?<p className="text-left m-3">Sorry, no TV shows can be found.</p> : null}
                     {results.map(item => (
                         <div key={item.id.toString()} className="my-2 py-3 text-left white-container">
                             <Link to={`/tv/${item.id.toString()}`} className="row">
@@ -380,7 +379,6 @@ class Search extends Component {
                 </div>
             );
         }
-
     }
 }
 

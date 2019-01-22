@@ -7,21 +7,21 @@ body{
 p {
   font-size: medium;
 }
-.white-container a:link {
+ a:link {
   color: black;
 }
 /* visited link */
-.white-container a:visited {
+a:visited {
   color: black;
 }
 
 /* mouse over link */
-.white-container a:hover {
+a:hover {
   color: rebeccapurple;
 }
 
 /* selected link */
-.white-container a:active {
+a:active {
   color: rebeccapurple;
 }
 
@@ -129,6 +129,11 @@ p {
   margin-right:15px;
 }
 
+p:last-child { margin-bottom: 0; }
+
+input {
+  font: 16px "Lucida Grande", Sans-Serif;
+}
 
  /*Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {

@@ -4,11 +4,12 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { debounce } from 'lodash'
+import ReactDatalist from 'react-datalist'
 
 class Navbar extends Component {
     state = {
         error: null,
-        text : null,
+        text : '',
         results: []
     };
     handleChange = debounce((text) => {
@@ -35,10 +36,8 @@ class Navbar extends Component {
         e.preventDefault();
         //clear input and redirect
         const text = this.state.text;
-        console.log(text);
-        this.setState({text:null});
-        // return (<Redirect to={`/search/${text}`}/>);
-        this.props.history.push(`/search/${text}`);
+        this.setState({text:''},()=>{this.props.history.push(`/search/${text}`);});
+
     }
 
 
@@ -48,29 +47,21 @@ class Navbar extends Component {
 
     render() {
         const { error, results } = this.state;
+        const options = []
+        results.map (item => options.push(item.name));
         if (error) {
             return <div className="py-5">Error: {error.message}</div>;}
         else if (results){
             return (
                 <nav className="navbar navbar-dark justify-content-between" style={{backgroundColor: "rebeccapurple"}}>
                     <a className="navbar-brand" href="/"><b>hOOk</b></a>
-                    {/*<form className=" my-2 my-lg-0 d-flex d-md-none">*/}
-                    {/*<input className="form-control mr-2 my-auto" type="search" placeholder="Search" aria-label="Search"/>*/}
-                    {/*<button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Go</button>*/}
-                    {/*</form>*/}
-                    <form className="form-inline my-2 my-lg-0 d-none d-md-flex" onSubmit={this.handleSearch.bind(this)}>
-                        <input list="tvshowlist" className="form-control mr-sm-2" onChange={e => this.handleChange(e.target.value)} type="search" placeholder="Search TV shows" aria-label="Search"/>
-                        {results
-                            ? (
-                                <datalist id="tvshowlist">
-                                    {results.map(item => (
-                                        <option key={item.id.toString()} value={item.name}/>
-                                    ))}
-                                </datalist>
-                            )
-                            : null
-                        }
+                    <form className=" my-2 my-lg-0 d-flex d-md-none" onSubmit={this.handleSearch.bind(this)}>
+                        <ReactDatalist list="tvshowlist" className="form-control mr-2 my-auto" options={options} placeholder="Search TV shows" onInputChange={e => this.handleChange(e.target.value)} />
 
+                        <button className="btn btn-outline-primary my-auto ml-2" type="submit">Go</button>
+                    </form>
+                    <form className="form-inline my-2 my-lg-0 d-none d-md-flex" onSubmit={this.handleSearch.bind(this)}>
+                        <ReactDatalist list="tvshowlist" className="form-control mr-sm-2" options={options} placeholder="Search TV shows" onInputChange={e => this.handleChange(e.target.value)} />
                         <button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </nav>

@@ -55,14 +55,9 @@ class Navbar extends Component {
             return (
                 <nav className="navbar navbar-dark justify-content-between" style={{backgroundColor: "rebeccapurple"}}>
                     <a className="navbar-brand" href="/"><b>hOOk</b></a>
-                    <form className=" my-2 my-lg-0 d-flex d-md-none" onSubmit={this.handleSearch.bind(this)}>
-                        <ReactDatalist list="tvshowlist" className="form-control mr-2 my-auto" options={options} placeholder="Search TV shows" onInputChange={e => this.handleChange(e.target.value)}/>
-
-                        <button className="btn btn-outline-primary my-auto ml-2" type="submit">Go</button>
-                    </form>
-                    <form className="form-inline my-2 my-lg-0 d-none d-md-flex" onSubmit={this.handleSearch.bind(this)}>
-                        <ReactDatalist list="tvshowlist" className="form-control mr-sm-2" options={options} placeholder="Search TV shows" onInputChange={e => this.handleChange(e.target.value)}/>
-                        <button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                    <form className="form-inline my-2 my-lg-0" onSubmit={this.handleSearch.bind(this)}>
+                        <ReactDatalist list="tvshowlist" className="form-control my-auto mr-sm-2" options={options} placeholder="Search TV shows" onInputChange={e => this.handleChange(e.target.value)}/>
+                        <button className="btn btn-outline-primary my-auto ml-2" type="submit">Search</button>
                     </form>
                 </nav>
             );

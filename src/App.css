@@ -140,6 +140,9 @@ a:active {
   .my-select {
     font-size: medium;
   }
+  .react-datalist-option {
+    font-size: medium;
+  }
 }
 
 /*Medium devices (tablets, 768px and up)*/
@@ -159,5 +162,8 @@ a:active {
   }
   .my-select {
     font-size: x-large;
+  }
+  .react-datalist-option {
+    font-size: large;
   }
 }

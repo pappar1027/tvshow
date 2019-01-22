@@ -13,20 +13,23 @@ class Navbar extends Component {
     };
     handleChange = debounce((text) => {
         this.setState({text});
-        fetch(`https://api.themoviedb.org/3/search/tv?api_key=5c42d570e7ecb65d2dca1264e2f80e37&language=en-US&query=${text}&page=1`)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        results: result.results
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        error
-                    });
-                }
-            )
+        if (text !== '') {
+            fetch(`https://api.themoviedb.org/3/search/tv?api_key=5c42d570e7ecb65d2dca1264e2f80e37&language=en-US&query=${text}&page=1`)
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        this.setState({
+                            results: result.results
+                        });
+                    },
+                    (error) => {
+                        this.setState({
+                            error
+                        });
+                    }
+                )
+        }
+
     },500);
     handleSearch (e){
         e.preventDefault();
@@ -57,17 +60,21 @@ class Navbar extends Component {
                     {/*</form>*/}
                     <form className="form-inline my-2 my-lg-0 d-none d-md-flex" onSubmit={this.handleSearch.bind(this)}>
                         <input list="tvshowlist" className="form-control mr-sm-2" onChange={e => this.handleChange(e.target.value)} type="search" placeholder="Search TV shows" aria-label="Search"/>
-                        <datalist id="tvshowlist">
-                            {results.map(item => (
-                                <option key={item.id.toString()} value={item.name}/>
-                            ))}
-                        </datalist>
+                        {results
+                            ? (
+                                <datalist id="tvshowlist">
+                                    {results.map(item => (
+                                        <option key={item.id.toString()} value={item.name}/>
+                                    ))}
+                                </datalist>
+                            )
+                            : null
+                        }
+
                         <button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </nav>
             );
-        } else {
-            return <div className="py-5">No result found</div>;
         }
 
     }

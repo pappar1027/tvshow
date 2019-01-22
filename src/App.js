@@ -61,7 +61,7 @@ class Shows extends Component {
             }
         )
   }
-  onChange() {
+  handleChange = ()=>{
       fetch(`https://api.themoviedb.org/3/discover/tv?api_key=5c42d570e7ecb65d2dca1264e2f80e37&language=en-US&sort_by=${this.state.sortBy}&page=1&timezone=Asia%2FSingapore&include_null_first_air_dates=false&${this.state.genre}`)
           .then(res => res.json())
           .then(
@@ -94,8 +94,8 @@ class Shows extends Component {
                     <div className="centered">
                         <Route path="/" exact render={()=> (
                             <div className="row main-container my-4">
-                                <Select options={sortby} onChange={value=> this.setState({sortBy: value.value},this.onChange)} defaultValue={sortby[0]} className="col-12 col-sm-6 px-1 py-1 py-sm-2 my-select"/>
-                                <Select options={genres} onChange={value=> this.setState({genre: value.value},this.onChange)} defaultValue={genres[0]} className="col-12 col-sm-6 px-1 py-1 py-sm-2 my-select"/>
+                                <Select options={sortby} onChange={value=> this.setState({sortBy: value.value},this.handleChange)} defaultValue={sortby[0]} className="col-12 col-sm-6 px-1 py-1 py-sm-2 my-select"/>
+                                <Select options={genres} onChange={value=> this.setState({genre: value.value},this.handleChange)} defaultValue={genres[0]} className="col-12 col-sm-6 px-1 py-1 py-sm-2 my-select"/>
                                 {shows.map(item => (
                                     <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 p-1 mb-1 align-self-center">
                                         <Link to={`/tv/${item.id.toString()}`}>
@@ -316,6 +316,7 @@ class Search extends Component {
             isLoaded :false,
             results: []
         }
+        this.fetchData = this.fetchData.bind(this);
     }
     componentDidMount() {
         this.fetchData();

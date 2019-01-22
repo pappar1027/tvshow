@@ -35,6 +35,8 @@ class Navbar extends Component {
     handleSearch (e){
         e.preventDefault();
         //clear input and redirect
+        console.log(this.inputTitle);
+        this.inputTitle.setState({filter: ''});
         const text = this.state.text;
         this.setState({text:''},()=>{this.props.history.push(`/search/${text}`);});
 
@@ -55,7 +57,7 @@ class Navbar extends Component {
                 <nav className="navbar navbar-dark justify-content-between" style={{backgroundColor: "rebeccapurple"}}>
                     <a className="navbar-brand" href="/"><b>hOOk</b></a>
                     <form className="form-inline my-2 my-lg-0" onSubmit={this.handleSearch.bind(this)}>
-                        <ReactDatalist list="tvshowlist" className="form-control my-auto" options={options} placeholder="Search TV shows" onInputChange={e => this.handleChange(e.target.value)}/>
+                        <ReactDatalist list="tvshowlist" className="form-control my-auto" options={options} placeholder="Search TV shows" onInputChange={e => this.handleChange(e.target.value)} ref={el => this.inputTitle = el}/>
                         <button className="btn btn-outline-primary my-auto ml-1" type="submit">Go</button>
                     </form>
                 </nav>

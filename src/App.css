@@ -150,7 +150,7 @@ a:active {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #fff;
+  background: rebeccapurple;
   margin: -3px 0 0 -3px;
 }
 .lds-roller div:nth-child(1) {

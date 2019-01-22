@@ -94,14 +94,14 @@ class Shows extends Component {
                 <div className="centered">
                     <Route path="/" exact render={()=> (
                         <div className="row main-container my-4">
-                            <Select options={sortby} onChange={value=> this.setState({sortBy: value.value},this.onChange)} defaultValue={sortby[0]} className="col-12 col-sm-6 px-1 py-2"/>
-                            <Select options={genres} onChange={value=> this.setState({genre: value.value},this.onChange)} defaultValue={genres[0]} className="col-12 col-sm-6 px-1 py-2"/>
+                            <Select options={sortby} onChange={value=> this.setState({sortBy: value.value},this.onChange)} defaultValue={sortby[0]} className="col-12 col-sm-6 px-1 py-1 py-sm-2 my-select"/>
+                            <Select options={genres} onChange={value=> this.setState({genre: value.value},this.onChange)} defaultValue={genres[0]} className="col-12 col-sm-6 px-1 py-1 py-sm-2 my-select"/>
                             {shows.map(item => (
                                 <div key={item.id.toString()} className="col-6 col-sm-4 col-md-3 p-1 mb-1 align-self-center">
                                     <Link to={`/tv/${item.id.toString()}`}>
                                         {item.poster_path
                                             ? <img className="show-img" sizes="(max-width: 575) 45vw, (max-width: 767) 26vw, 20vw" srcSet={small+item.poster_path+" 154w,"+ medium+item.poster_path+" 342w,"+large+item.poster_path+" 780w"} src={original+item.poster_path} alt={item.name}/>
-                                            : <p className="purple">{item.name}</p>
+                                            : <p className="purple">(Poster Not Available)<br/>{item.name}</p>
                                         }
                                     </Link>
                                 </div>

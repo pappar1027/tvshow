@@ -35,10 +35,12 @@ class Navbar extends Component {
     handleSearch (e){
         e.preventDefault();
         //clear input and redirect
-        console.log(this.inputTitle);
-        this.inputTitle.setState({filter: ''});
-        const text = this.state.text;
-        this.setState({text:''},()=>{this.props.history.push(`/search/${text}`);});
+        if (this.state.text!=='') {
+            this.inputTitle.setState({filter: ''});
+            const text = this.state.text;
+            this.setState({text:''},()=>{this.props.history.push(`/search/${text}`);});
+        }
+
 
     }
 
